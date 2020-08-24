@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "0.18.1",
     "core-js": "3.6.5",
+    "echarts": "^4.8.0",
     "element-ui": "2.13.2",
     "js-cookie": "2.2.0",
     "mavon-editor": "^2.9.0",
@@ -52,6 +53,18 @@
     "svgo": "1.2.2",
     "vue-template-compiler": "2.6.10"
   },
+  "keywords": [
+    "vue",
+    "admin",
+    "dashboard",
+    "element-ui",
+    "boilerplate",
+    "admin-template",
+    "management-system",
+    "blog",
+    "博客",
+    "前端"
+  ],
   "browserslist": [
     "> 1%",
     "last 2 versions"

@@ -17,11 +17,11 @@ export function createBlog(data) {
  * @param {number} pageIndex 第几页
  * @param {number} pageSize 多少条
  */
-export function getBlogsList({ pageIndex = 1, pageSize = 20 }) {
+export function getBlogsList({ pageIndex = 1, pageSize = 20, release, charts }) {
   return request({
     url: '/blogs/getBlogsList',
     method: 'post',
-    data: { pageIndex, pageSize }
+    data: { pageIndex, pageSize, release, charts }
   })
 }
 
@@ -61,6 +61,25 @@ export function updateBlog(data) {
   })
 }
 
-export function getList(params) {
-  console.log('www')
+export function getCount() {
+  return request({
+    url: '/blogs/getCount',
+    method: 'get'
+  })
 }
+
+// export function addLike(id) {
+//   return request({
+//     url: '/blogs/like',
+//     method: 'patch',
+//     data: { id }
+//   })
+// }
+
+// export function addView(id) {
+//   return request({
+//     url: '/blogs/addView',
+//     method: 'patch',
+//     data: { id }
+//   })
+// }
