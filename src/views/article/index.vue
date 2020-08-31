@@ -82,7 +82,7 @@ export default {
       listLoading: true,
       list: null,
       pageIndex: 1,
-      pageSize: 20
+      pageSize: 100
     }
   },
   created() {

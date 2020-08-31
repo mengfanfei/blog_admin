@@ -3,24 +3,25 @@
 </template>
 
 <script>
-import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import resize from '../mixins/resize'
+/* eslint-disable */
+import echarts from "echarts"
+require("echarts/theme/macarons") // echarts theme
+import resize from "../mixins/resize"
 
 export default {
   mixins: [resize],
   props: {
     className: {
       type: String,
-      default: 'chart'
+      default: "chart"
     },
     width: {
       type: String,
-      default: '100%'
+      default: "100%"
     },
     height: {
       type: String,
-      default: '350px'
+      default: "350px"
     },
     autoResize: {
       type: Boolean,
@@ -29,109 +30,84 @@ export default {
     chartData: {
       type: Object,
       required: true
-    }
+    },
   },
   data() {
     return {
-      chart: null
-    }
+      chart: null,
+    };
   },
   watch: {
     chartData: {
       deep: true,
       handler(val) {
-        this.setOptions(val)
-      }
-    }
+        this.setOptions(val);
+      },
+    },
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
-    })
+      this.initChart();
+    });
   },
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    this.chart.dispose()
-    this.chart = null
+    this.chart.dispose();
+    this.chart = null;
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
+      this.chart = echarts.init(this.$el, "macarons");
+      this.setOptions(this.chartData);
     },
     setOptions({ id, like_number, view_number } = {}) {
       this.chart.setOption({
-        xAxis: {
-          name: '文章ID',
-          nameLocation: 'center',
-          data: id,
-          boundaryGap: false,
-          axisTick: {
-            show: true
-          }
-        },
-        grid: {
-          left: 10,
-          right: 10,
-          bottom: 20,
-          top: 30,
-          containLabel: true
+        title: {
+          text: "文章阅读点赞次数",
         },
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross'
-          },
-          padding: [5, 10]
-        },
-        yAxis: {
-          axisTick: {
-            show: false
-          }
+          trigger: "axis",
         },
         legend: {
-          data: ['点赞', '浏览']
+          data: ['点赞', '阅读'],
         },
-        series: [{
-          name: '点赞', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
-          type: 'line',
-          data: like_number,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true,
         },
-        {
-          name: '浏览',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
+        toolbox: {
+          feature: {
+            saveAsImage: {},
           },
-          data: view_number,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
-      })
-    }
-  }
-}
+        },
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: id,
+        },
+        yAxis: {
+          type: "value",
+        },
+        series: [
+          {
+            name: "点赞",
+            type: "line",
+            stack: "总量",
+            data: like_number,
+          },
+          {
+            name: "阅读",
+            type: "line",
+            stack: "总量",
+            data: view_number,
+          }
+        ],
+      });
+    },
+  },
+};
 </script>

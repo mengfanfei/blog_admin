@@ -1,9 +1,9 @@
 <template>
   <div class="dashboard-container">
     <!-- <div class="dashboard-text">name: {{ name }}</div> -->
-    <!-- <el-row class="line-charts">
+    <el-row class="line-charts">
       <line-chart :chart-data="lineChartData" />
-    </el-row> -->
+    </el-row>
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="12">
         <div class="chart-wrapper">
@@ -22,13 +22,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getCount, getBlogsList } from '../../api/blog'
-// import LineChart from './components/LineChart'
+import LineChart from './components/LineChart'
 import PieChart from './components/PieChart'
 import ColumChart from './components/ColumChart'
 export default {
   name: 'Dashboard',
   components: {
-    // LineChart,
+    LineChart,
     PieChart,
     ColumChart
   },
@@ -80,7 +80,7 @@ export default {
           view_number: []
         }
         result.data.forEach(item => {
-          lineChartData.id.push(item.blogId)
+          lineChartData.id.push(item.title)
           lineChartData.like_number.push(item.like_number)
           lineChartData.view_number.push(item.view_number)
         })
