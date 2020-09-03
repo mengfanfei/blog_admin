@@ -43,6 +43,7 @@
 import { createBlog, getBlogEdit, updateBlog } from "@/api/blog"
 import { uploadImg } from "@/api/utils"
 import { Message } from "element-ui"
+import { mydebounce } from '@/utils'
 export default {
   name: "Edit",
   data() {
@@ -63,6 +64,9 @@ export default {
   watch: {
     pictureList() {
       this.form.picture = this.pictureList[0]
+    },
+    'form.content_markdown'() {
+      this.debouncehandle(this)
     }
   },
   created() {
@@ -72,6 +76,9 @@ export default {
     }
   },
   methods: {
+    debouncehandle: mydebounce((vm) => {
+      vm.handleEditorSave()
+    }, 2000),
     async getEdit(blogId) {
       try {
         const result = await getBlogEdit(blogId)

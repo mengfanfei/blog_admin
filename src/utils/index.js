@@ -156,3 +156,45 @@ export function debounce(func, wait, immediate) {
     return result
   }
 }
+/* eslint-disable */
+export function mydebounce(fn, delay, leading, resultFn) { // fn:需要处理的函数，delay： 延迟时间, leading: 是否立即执行（true）,resultFn: 回调函数
+  var timer = null // 定义定时器
+  leading = leading || false
+  resultFn = resultFn || null
+  var handleFn = function() {
+    if (timer) clearTimeout(timer) // 取消定时器
+    var _this = this // 获取this
+    var _arguments = arguments // 获取argument
+    if (leading) { // 立即执行
+      var isInvoke = false
+      if (!timer) {
+        var res = fn.apply(_this, _arguments)
+        isInvoke = true
+        if (resultFn) { // 有返回值
+	        resultFn(res)
+        }
+      }
+      timer = setTimeout(function() {
+        timer = null
+        if (!isInvoke) {
+          var res = fn.apply(_this, _arguments)
+          if (resultFn) { // 有返回值
+	          resultFn(res)
+          }
+        }
+      }, delay)
+    } else { // 不立即执行
+      timer = setTimeout(function() { // 设置定时器，延迟delay秒之后，执行fn()函数
+        var res = fn.apply(_this, _arguments) // 在执行时通过apply来使用_this和_arguments
+        if (resultFn) { // 有返回值
+	        resultFn(res)
+        }
+      }, delay)
+    }
+  }
+  // 取消处理
+  handleFn.cancel = function() {
+    if(timer) clearTimeout(timer)
+  }
+  return handleFn
+}
